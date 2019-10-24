@@ -2,7 +2,7 @@ name := "smd1"
 
 version := "0.1"
 
-//scalaVersion := "2.12.8"
+scalaVersion := "2.12.8"
 //
 //val elastic4sVersion = "7.3.1"
 //libraryDependencies ++= Seq(
@@ -29,8 +29,21 @@ version := "0.1"
 
 
 // major.minor are in sync with the elasticsearch releases
+//val elastic4sVersion = "5.6.0"
+
 val elastic4sVersion = "5.6.0"
 libraryDependencies ++= Seq(
+
+//  "com.sksamuel.elastic4s" %% "elastic4s-core" % elastic4sVersion,
+//
+//  // for the default http client
+//  "com.sksamuel.elastic4s" %% "elastic4s-client-esjava" % elastic4sVersion,
+//
+//  // if you want to use reactive streams
+//  "com.sksamuel.elastic4s" %% "elastic4s-http-streams" % elastic4sVersion,
+  
+  //##################################
+  
   "com.sksamuel.elastic4s" %% "elastic4s-core" % elastic4sVersion,
   // for the tcp client
   "com.sksamuel.elastic4s" %% "elastic4s-tcp" % elastic4sVersion,
@@ -40,6 +53,8 @@ libraryDependencies ++= Seq(
 
   // if you want to use reactive streams
   "com.sksamuel.elastic4s" %% "elastic4s-streams" % elastic4sVersion,
+
+  "com.sksamuel.elastic4s" %% "elastic4s-embedded" % elastic4sVersion,
 
   // a json library
   "com.sksamuel.elastic4s" %% "elastic4s-jackson" % elastic4sVersion,
@@ -51,3 +66,5 @@ libraryDependencies ++= Seq(
   // testing
   "com.sksamuel.elastic4s" %% "elastic4s-testkit" % elastic4sVersion % "test",
   "com.sksamuel.elastic4s" %% "elastic4s-embedded" % elastic4sVersion % "test")
+
+
