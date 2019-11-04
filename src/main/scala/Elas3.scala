@@ -1,9 +1,11 @@
-import com.sksamuel.elastic4s.{ElasticsearchClientUri, TcpClient}
+import com.sksamuel.elastic4s.{ElasticsearchClientUri, Hit, HitReader, TcpClient}
 import com.sksamuel.elastic4s.http.ElasticDsl._
 import org.elasticsearch.action.support.WriteRequest.RefreshPolicy
 import com.sksamuel.elastic4s.http.HttpClient
 import org.apache.http.client.config.RequestConfig
 import org.apache.http.impl.nio.client.HttpAsyncClientBuilder
+import com.sksamuel.elastic4s.searches.queries.matches.MatchQueryBuilder
+
 
 
 object Elas3 extends App {

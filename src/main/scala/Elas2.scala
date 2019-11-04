@@ -21,7 +21,6 @@ object Elas2 extends App {
     }
   }
 
-
   // https://stackoverflow.com/questions/40517893/elastic4s-deserializing-search-results
 
   // now we can search for the document we just indexed
@@ -100,17 +99,17 @@ object Elas2 extends App {
       val obj = RawStream(
         hit.sourceField("result").asInstanceOf[List[AnyRef]].map { entry =>
           ResultFill(
-            hit.sourceAsMap("result.id").toString.toLong,
-            hit.sourceAsMap("result.resource_type").toString,
-            hit.sourceAsMap("result.specific_resource_type").toString,
-            hit.sourceAsMap("result.stream_type").toString,
-            hit.sourceAsMap("result.from_id").toString,
-            hit.sourceAsMap("result.from_name").toString,
-            hit.sourceAsMap("result.from_display_picture").toString,
-            hit.sourceAsMap("result.content").toString,
-            hit.sourceAsMap("result.final_sentiment").toString,
-            hit.sourceAsMap("result.timestamp").toString,
-            hit.sourceAsMap("result.object_content").toString,
+            hit.sourceAsMap("id").toString.toLong,
+            hit.sourceAsMap("resource_type").toString,
+            hit.sourceAsMap("specific_resource_type").toString,
+            hit.sourceAsMap("stream_type").toString,
+            hit.sourceAsMap("from_id").toString,
+            hit.sourceAsMap("from_name").toString,
+            hit.sourceAsMap("from_display_picture").toString,
+            hit.sourceAsMap("content").toString,
+            hit.sourceAsMap("final_sentiment").toString,
+            hit.sourceAsMap("timestamp").toString,
+            hit.sourceAsMap("object_content").toString,
           )
         },
         Paging(hit.sourceField("paging.next").toString),
@@ -119,16 +118,29 @@ object Elas2 extends App {
     }
   }
 
+//  hit.sourceAsMap("result.id").toString.toLong,
+//  hit.sourceAsMap("result.resource_type").toString,
+//  hit.sourceAsMap("result.specific_resource_type").toString,
+//  hit.sourceAsMap("result.stream_type").toString,
+//  hit.sourceAsMap("result.from_id").toString,
+//  hit.sourceAsMap("result.from_name").toString,
+//  hit.sourceAsMap("result.from_display_picture").toString,
+//  hit.sourceAsMap("result.content").toString,
+//  hit.sourceAsMap("result.final_sentiment").toString,
+//  hit.sourceAsMap("result.timestamp").toString,
+//  hit.sourceAsMap("result.object_content").toString,
+
   val resAll2 = client.execute{
-    search("zaj" / "aa") matchAllQuery()
+    search("xei" / "ae") matchAllQuery()
   }.await
 
-  val respon: Seq[RawStream] = resAll2.to[RawStream]
+  val respon = resAll2.to[ResultFill]
+  // bentuk dari response  itu kita melakukan query, didalam query masukkan semua parameter pencarian dimana kita melakukan pencarian dari beberapa index, lalu hasilnya diconvert ke hitreader
 
 
 
-  println(respon)
+  //println(respon)
 
 
-  //println(hsl)
+  println(respon.toList.length)
 }

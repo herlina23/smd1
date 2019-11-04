@@ -1,9 +1,11 @@
-import com.sksamuel.elastic4s.{ElasticsearchClientUri, TcpClient}
+import com.sksamuel.elastic4s.{ElasticsearchClientUri, Hit, HitReader, TcpClient}
 import com.sksamuel.elastic4s.http.ElasticDsl._
 import org.elasticsearch.action.support.WriteRequest.RefreshPolicy
 import com.sksamuel.elastic4s.http.HttpClient
 import org.apache.http.client.config.RequestConfig
 import org.apache.http.impl.nio.client.HttpAsyncClientBuilder
+import com.sksamuel.elastic4s.searches.queries.matches.MatchQueryBuilder
+
 
 
 //cari pembenaran dari import yang masih merah
@@ -30,7 +32,42 @@ object Elas4 extends App {
   val hasil = resp.hits.hits.toList
 
 
-  println(hasil)
+  case class Pg(next:String)
+
+  implicit object PgHitReader extends HitReader[Pg] {
+    override def read(hit: Hit): Either[Throwable, Pg] = {
+      Right(Pg(hit.sourceField("next").toString))
+    }
+  }
+
+  case class Paging(paging: Pg)
+  implicit object PagingHitReader extends HitReader[Paging] {
+    override def read(hit: Hit): Either[Throwable, Paging] = {
+      val obj = Paging(
+        Pg(hit.sourceField("paging").toString)
+      )
+      Right(obj)
+    }
+  }
+
+
+
+
+
+
+
+
+  val coba = Paging(Pg(next="ahahha"))
+
+  val resAll2 = client.execute{
+    search("xee" / "a2") matchAllQuery()
+  }.await
+
+
+  val res = resAll2.to[Paging]
+
+
+  println(res)
 
 
 }
